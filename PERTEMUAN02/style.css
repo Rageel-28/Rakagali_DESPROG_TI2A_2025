@@ -1,0 +1,77 @@
+/* Reset */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.65;
+  /* background gradasi warna */
+  background: linear-gradient(120deg, #f6d365, #fda085);
+}
+
+/* Container */
+.container-satu {
+  max-width: 1000px;
+  margin: 32px auto;
+  background: #fff;
+  padding: 24px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: flex;
+  gap: 24px;
+}
+
+/* Kolom */
+.kolom-utama { flex: 2.4; }
+.sidebar-satu,
+.sidebar-dua { flex: 1; }
+
+/* Tipografi */
+h2, h3 { margin: 0 0 12px; }
+
+/* Sidebar */
+.sidebar-satu {
+  background: #e0f7fa;
+  padding: 10px;
+  border-radius: 6px;
+}
+.sidebar-dua {
+  background: #fce4ec;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+/* Gambar */
+.gambar-banner {
+  width: 100%;
+  height: auto;
+  margin-bottom: 16px;
+  border-radius: 6px;
+}
+.gambar-sidebar {
+  width: 100%;
+  margin-top: 12px;
+  border-radius: 6px;
+}
+
+/* Responsif */
+@media (max-width: 800px) {
+  .container-satu { flex-direction: column; }
+}
+
+.sidebar-satu ul {
+  list-style: none;
+  padding: 0;
+}
+.sidebar-satu li {
+  margin: 8px 0;
+}
+.sidebar-satu img {
+  display: block;
+  max-width: 100%;
+  border-radius: 6px;
+  transition: transform 0.3s;
+}
+.sidebar-satu img:hover {
+  transform: scale(1.05); /* efek zoom saat hover */
+}
+
