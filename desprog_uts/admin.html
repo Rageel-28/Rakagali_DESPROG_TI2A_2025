@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin – Laporan Warga (LocalStorage)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-solid">
+  <div class="admin-container">
+    <div class="admin-header">
+      <h1>Dashboard Laporan</h1>
+      <div class="admin-actions">
+        <span>Total: <b id="totalCount">0</b></span>
+        <!-- tombol reset local data -->
+        <button id="btnReset" style="margin-left:10px;padding:6px 10px;border:1px solid #ddd;border-radius:8px;background:#fff;cursor:pointer">
+          Reset Data
+        </button>
+        <!-- tombol kirim ke PHP sebagai ARRAY -->
+        <button id="btnProcessPHP" class="btn-orange" style="margin-left:10px">
+          Olah Dengan PHP (Array)
+        </button>
+      </div>
+    </div>
+
+    <!-- area tabel -->
+    <div id="contentArea"></div>
+
+    <!-- form tersembunyi untuk POST ke process.php -->
+    <form id="phpForm" action="process.php" method="POST" style="display:none"></form>
+  </div>
+
+  <!-- skrip -->
+  <script src="app.js"></script>
+  <script>
+// fungsi render tabel admin
+function render() {
+  // ambil semua data dari localStorage, urut terbaru
+  const list = readStore().sort((a,b)=>new Date(b.waktu)-new Date(a.waktu));
+
+  // tampilkan total
+  document.getElementById('totalCount').innerText = list.length;
+
+  // target area tabel
+  const area = document.getElementById('contentArea');
+
+  // jika kosong
+  if (!list.length) {
+    area.innerHTML = '<div class="empty-box">Belum ada laporan (localStorage kosong di browser ini).</div>';
+    return;
+  }
+
+  // susun baris HTML
+  const rows = list.map(m=>`
+    <tr>
+      <td>${m.id}</td>
+      <td>${formatIDDate(m.waktu)}</td>
+      <td>${m.nama}</td>
+      <td>${m.email}</td>
+      <td><span class="badge">${m.jenis}</span></td>
+      <td>${m.judul}</td>
+      <td>${(m.pesan.length>120)?(m.pesan.slice(0,120)+'…'):m.pesan}</td>
+    </tr>
+  `).join('');
+
+  // tempel tabel
+  area.innerHTML = `
+    <div class="table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>ID</th><th>Waktu</th><th>Nama</th><th>Email</th><th>Jenis</th><th>Judul</th><th>Pesan</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  `;
+}
+
+// reset semua data localStorage
+document.getElementById('btnReset').addEventListener('click', ()=>{
+  if (confirm('Hapus semua data laporan di localStorage browser ini?')) {
+    resetStore(); // kosongkan storage
+    render();     // gambar ulang
+  }
+});
+
+// kirim ke PHP sebagai array form (bukan JSON)
+document.getElementById('btnProcessPHP').addEventListener('click', ()=>{
+  const list = readStore(); // ambil data
+  if (!list.length) { alert('Tidak ada data untuk diproses.'); return; }
+
+  const form = document.getElementById('phpForm');
+  form.innerHTML = '';      // hapus isian lama
+
+  // untuk setiap record, buat input hidden dengan name="field[]"
+  for (const r of list) {
+    for (const k of ['id','nama','email','jenis','judul','pesan','waktu']) {
+      const inp = document.createElement('input');
+      inp.type = 'hidden';
+      inp.name = k + '[]';   // array form → di PHP jadi $_POST[k] (array)
+      inp.value = r[k] || '';
+      form.appendChild(inp);
+    }
+  }
+
+  form.submit(); // POST ke process.php
+});
+
+// render awal
+render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Laporan Berhasil</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-cover">
+  <div class="success-shell">
+    <div class="success-left">
+      <img src="images/logo.png" class="logo" alt="Logo Kampung">
+    </div>
+    <div class="success-right">
+      <div class="success-card">
+        <div class="success-icon">✓</div>
+        <h2>Laporan Berhasil Dikirim</h2>
+
+        <!-- tempat ringkasan ditampilkan -->
+        <div id="summaryWrap"></div>
+
+        <a href="index.html" class="btn-orange" style="margin-right:8px">Kirim Laporan Lagi</a>
+        <a href="admin.html" class="btn-orange">Buka Dashboard</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- skrip -->
+  <script src="jquery-3.7.1.js"></script>
+  <script src="app.js"></script>
+  <script>
+  // jalan saat DOM siap
+  $(function(){
+    // efek fade-in panel sukses
+    $('.success-shell').css('opacity',0).animate({opacity:1},800);
+
+    // ambil id terakhir dari sessionStorage (di-set saat addRecord)
+    const lastId = sessionStorage.getItem('laporan_last_id');
+
+    // jika ada id → cari data itu; kalau tidak → ambil data terbaru
+    const data = lastId ? getById(lastId) : latestRecord();
+
+    // target elemen ringkasan
+    const $wrap = $('#summaryWrap');
+
+    // jika tidak ada data (user langsung akses success.html)
+    if (!data) {
+      $wrap.html('<p class="muted">Tidak ada data untuk ditampilkan.</p>');
+      return;
+    }
+
+    // render ringkasan 
+    $wrap.html(`
+      <div class="success-summary">
+        <div><span>ID</span><b>${data.id}</b></div>
+        <div><span>Nama</span><b>${data.nama}</b></div>
+        <div><span>Jenis</span><b>${data.jenis}</b></div>
+        <div><span>Judul</span><b>${data.judul}</b></div>
+        <div><span>Waktu</span><b>${formatIDDate(data.waktu)}</b></div>
+      </div>
+    `);
+  });
+  </script>
+</body>
+</html>

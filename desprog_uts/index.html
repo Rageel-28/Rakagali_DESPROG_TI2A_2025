@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Laporan Warga - Kampung Cempluk</title>
+  <link rel="stylesheet" href="styles.css" /> 
+</head>
+<body class="bg-cover">
+
+  <!-- NAVBAR -->
+  <header class="navbar" id="navbar">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <img src="images/logo.png" alt="Logo" class="nav-logo">
+        <div class="nav-title"><strong>Sistem Informasi Cempluk</strong></div>
+      </div>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Buka menu">☰</button>
+
+      <nav class="nav-right" id="navMenu">
+        <a href="https://wa.me/6281234567890" target="_blank" rel="noopener">WA</a>
+        <a href="https://instagram.com/akun_cempluk" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://tiktok.com/@akun_cempluk" target="_blank" rel="noopener">TikTok</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- KONTEN UTAMA -->
+  <main class="page-wrap">
+    <div class="box" role="region" aria-label="Form Laporan">
+      <!-- Kiri: logo besar -->
+      <div class="left-section">
+        <img src="images/logo.png" alt="Logo Kampung" class="logo">
+      </div>
+
+      <!-- Kanan: form -->
+      <div class="right-section">
+        <!-- novalidate: biar kita kontrol validasi manual lewat JS -->
+        <form class="form-card" id="laporanForm" novalidate>
+          <h1>Laporan Warga</h1>
+
+          <label>Nama*</label>
+          <input type="text" name="nama" required>
+
+          <label>Email*</label>
+          <input type="email" name="email" required>
+
+          <label>Jenis Laporan*</label>
+          <select name="jenis" required>
+            <option value="">-- pilih --</option>
+            <option>Kritik</option>
+            <option>Saran</option>
+            <option>Laporan Kerusakan</option>
+            <option>Lainnya</option>
+          </select>
+
+          <label>Judul*</label>
+          <input type="text" name="judul" maxlength="100" required>
+
+          <label>Pesan*</label>
+          <textarea name="pesan" rows="4" required></textarea>
+
+          <button type="submit" id="btnKirim">Kirim</button>
+          <small class="muted">* wajib diisi</small>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bottom-bar">
+    <div class="bottom-inner">
+      <span>© <span id="year"></span> Kampung Cempluk</span>
+      <div class="bottom-links">
+        <a href="mailto:admin@cempluk.com">admin@cempluk.com</a>
+        <span>•</span>
+        <a href="https://wa.me/6281234567890" target="_blank" rel="noopener">Hubungi WA</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- jQuery + app -->
+  <script src="jquery-3.7.1.js"></script>
+  <script src="app.js"></script>
+  <script>
+  // seluruh blok jalan ketika DOM siap
+  $(function(){
+    // set tahun di footer
+    $('#year').text(new Date().getFullYear());
+
+    // efek fade-in kotak utama
+    $('.box').css('opacity',0).animate({opacity:1},800);
+
+    // handle submit form
+    $('#laporanForm').on('submit', function(e){
+      e.preventDefault(); // cegah submit default (agar bisa validasi dulu)
+
+      // nonaktifkan tombol agar tidak double submit
+      const $btn = $('#btnKirim').prop('disabled', true).text('Mengirim...');
+
+      // ambil nilai dari form
+      const f = e.target;
+      const payload = {
+        nama:  f.nama.value.trim(),
+        email: f.email.value.trim(),
+        jenis: f.jenis.value.trim(),
+        judul: f.judul.value.trim(),
+        pesan: f.pesan.value.trim()
+      };
+
+      // jalankan validasi (SATU-SATUNYA di aplikasi)
+      const errors = validateInput(payload);
+      if (errors.length) {
+        alert(errors.join('\n'));             // tampilkan error
+        $btn.prop('disabled', false).text('Kirim'); // aktifkan kembali tombol
+        return;                               // hentikan proses submit
+      }
+
+      // simpan ke Local Storage
+      addRecord(payload);
+
+      // pindah ke halaman sukses (ringkasan)
+      window.location.href = 'success.html';
+    });
+  });
+  </script>
+</body>
+</html>
