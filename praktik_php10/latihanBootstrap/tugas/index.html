@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Halaman Web Bootstrap</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .navbar-brand {
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    .jumbotron {
+      background: linear-gradient(135deg, #007bff, #6c63ff);
+      color: white;
+      padding: 4rem 2rem;
+      border-radius: 1rem;
+      margin-top: 20px;
+    }
+    .gallery img {
+      width: 100%;
+      border-radius: 10px;
+      transition: 0.3s;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    footer {
+      background-color: #343a40;
+      color: white;
+      padding: 10px 0;
+      text-align: center;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">MyBootstrap</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active"><a class="nav-link" href="#">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Gallery</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+  <!-- Jumbotron -->
+  <div class="container">
+    <div class="jumbotron text-center mt-4">
+      <h1 class="display-4">Selamat Datang di Website Bootstrap</h1>
+      <p class="lead">Website ini dibuat menggunakan framework <strong>Bootstrap 4</strong>.</p>
+      <a class="btn btn-light btn-lg mt-2" href="https://www.w3schools.com/bootstrap4/default.asp" target="_blank">Pelajari Bootstrap</a>
+    </div>
+  </div>
+  <!-- Gallery -->
+  <div class="container gallery">
+    <h3 class="text-center mb-4">Galeri Gambar</h3>
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <img src="images/tower.jpeg" alt="Gambar 1">
+      </div>
+      <div class="col-md-4 mb-3">
+        <img src="images/mountain.jpeg" alt="Gambar 2">
+      </div>
+      <div class="col-md-4 mb-3">
+        <img src="images/flower.jpeg" alt="Gambar 3">
+      </div>
+    </div>
+  </div>
+  <!-- Card tambahan -->
+  <div class="container mt-5">
+    <div class="card-deck">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Responsive Design</h5>
+          <p class="card-text">Bootstrap membuat tampilan website menjadi otomatis menyesuaikan ukuran layar perangkat.</p>
+        </div>
+      </div>
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Komponen Lengkap</h5>
+          <p class="card-text">Bootstrap menyediakan banyak komponen seperti tombol, tabel, dan form.</p>
+        </div>
+      </div>
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Mudah Digunakan</h5>
+          <p class="card-text">Dengan dokumentasi lengkap di W3Schools, kamu bisa belajar dengan cepat.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Praktikum Desain Web | Dibuat oleh Mahasiswa Teknik Informatika</p>
+  </footer>
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
